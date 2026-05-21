@@ -9,6 +9,7 @@ import Checkout from "./pages/Checkout"
 import Auth from "./pages/Auth";
 import Navbar from "./components/Navbar";
 import AuthProvider from './context/AuthContext'
+import ProductDetails from './pages/ProductDetails'
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout" elemenst={<Checkout />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
         </Routes>
       </AuthProvider>
     </div>
