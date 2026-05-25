@@ -1,7 +1,4 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Home from "./pages/Home";
@@ -10,20 +7,25 @@ import Auth from "./pages/Auth";
 import Navbar from "./components/Navbar";
 import AuthProvider from './context/AuthContext'
 import ProductDetails from './pages/ProductDetails'
+import CartProvider from './context/CartContext'
 
 function App() {
   return (
-    <div className='app'>
-      <AuthProvider>
-        <Navbar></Navbar>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/checkout" elemenst={<Checkout />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
-        </Routes>
-      </AuthProvider>
-    </div>
+    <AuthProvider>
+      <CartProvider>
+        <div className='app'>
+
+          <Navbar></Navbar>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/checkout" elemenst={<Checkout />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+          </Routes>
+
+        </div>
+      </CartProvider>
+    </AuthProvider>
   )
 }
 
