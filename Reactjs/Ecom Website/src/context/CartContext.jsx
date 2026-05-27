@@ -11,7 +11,7 @@ export default function CartProvider({ children }) {
         if (existing) {
             const currentQuantity = existing.quantity;
             const updatedCartItems = cartItems.map((item) => item.id === productId
-                ? { id:productId, quantity: currentQuantity + 1 }
+                ? { id: productId, quantity: currentQuantity + 1 }
                 : item);
             setCartItems(updatedCartItems);
         } else {
@@ -20,39 +20,40 @@ export default function CartProvider({ children }) {
 
     }
 
-    function getCartItemsWithProducts(){
+    function getCartItemsWithProducts() {
         return cartItems.map(item => ({
-            ...item, 
+            ...item,
             product: getProductById(item.id),
         })).filter(item => item.product)
     }
 
-    function removeFromCart(productId){
-        setCartItems(cartItems.filter(item) !== productId);
+    function removeFromCart(productId) {
+        setCartItems((prev) => prev.filter((item) => item.id !== productId));
+
     }
 
-    function updateQuantity(productId, quantity){
-        if (quantity <= 0 ){
+    function updateQuantity(productId, quantity) {
+        if (quantity <= 0) {
             removeFromCart(productId);
             return;
         }
-        setCartItems(cartItems.map((item)=>
-        item.id===productId ? {...item, quantity:quantity} : item ))
+        setCartItems(cartItems.map((item) =>
+            item.id === productId ? { ...item, quantity: quantity } : item))
     }
 
-    function getCartTotal(){
-        const total = cartItems.reduce((total, item)=> {
+    function getCartTotal() {
+        const total = cartItems.reduce((total, item) => {
             const product = getProductById(item.id)
             return total + (product ? product.price * item.quantity : 0)
-        },0);
+        }, 0);
         return total;
     }
 
-    function clearCart(){
+    function clearCart() {
         setCartItems([])
     }
 
-    return <CartContext.Provider value={{cartItems, addToCart, updateQuantity, removeFromCart, clearCart,getCartItemsWithProducts}}>{children}</CartContext.Provider>
+    return <CartContext.Provider value={{ cartItems, addToCart, updateQuantity, getCartTotal, removeFromCart, clearCart, getCartItemsWithProducts }}>{children}</CartContext.Provider>
 }
 
 export function useCart() {
